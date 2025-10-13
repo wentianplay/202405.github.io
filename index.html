@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机课堂点名系统 | 2024级5班</title>
+    <title>课堂随机点名系统 | 2024级5班</title>
     <style>
         * {
             margin: 0;
@@ -23,9 +23,9 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
@@ -45,23 +45,25 @@
         }
         
         .quote-container {
-            background-color: #e3f2fd;
-            padding: 15px;
+            background-color: #e8f5e9;
+            padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
             text-align: center;
-            border-left: 5px solid #1976d2;
+            border-left: 5px solid #4caf50;
             transition: all 0.5s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         
         .quote {
-            font-size: 1.2rem;
-            color: #1565c0;
+            font-size: 1.4rem;
+            color: #2e7d32;
             font-style: italic;
+            font-weight: bold;
         }
         
         .name-display {
-            height: 200px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,12 +73,14 @@
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
             border: 2px dashed #bbdefb;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .name {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: bold;
-            color: #1976d2;
+            color: #f44336;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
@@ -88,13 +92,14 @@
         }
         
         button {
-            padding: 12px 30px;
-            font-size: 1.1rem;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
         }
         
         #startBtn {
@@ -120,14 +125,15 @@
         .history {
             margin-top: 30px;
             background-color: #e8f5e9;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
         }
         
         .history h3 {
             color: #2e7d32;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: center;
+            font-size: 1.5rem;
         }
         
         .history-list {
@@ -139,9 +145,10 @@
         
         .history-item {
             background-color: #c8e6c9;
-            padding: 8px 15px;
+            padding: 10px 20px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: bold;
         }
         
         .pulse {
@@ -163,19 +170,114 @@
             100% { opacity: 1; }
         }
         
-        @media (max-width: 600px) {
+        /* 一体机适配 */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1200px;
+                padding: 40px;
+            }
+            
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .quote {
+                font-size: 1.8rem;
+            }
+            
+            .name {
+                font-size: 5rem;
+            }
+            
+            .name-display {
+                height: 300px;
+            }
+            
+            button {
+                padding: 18px 50px;
+                font-size: 1.5rem;
+            }
+            
+            .history h3 {
+                font-size: 1.8rem;
+            }
+            
+            .history-item {
+                font-size: 1.2rem;
+                padding: 12px 24px;
+            }
+        }
+        
+        /* 手机适配 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
             h1 {
                 font-size: 2rem;
+            }
+            
+            .quote {
+                font-size: 1.1rem;
             }
             
             .name {
                 font-size: 2.5rem;
             }
             
+            .name-display {
+                height: 180px;
+            }
+            
             button {
-                padding: 10px 20px;
+                padding: 12px 25px;
                 font-size: 1rem;
             }
+            
+            .history h3 {
+                font-size: 1.3rem;
+            }
+            
+            .history-item {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
+        
+        /* 超小屏幕适配 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quote {
+                font-size: 1rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .name-display {
+                height: 150px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 80%;
+            }
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -198,6 +300,8 @@
                 <button id="resetBtn">重置</button>
             </div>
             
+            <div class="status" id="status">系统就绪</div>
+            
             <div class="history">
                 <h3>点名历史</h3>
                 <div class="history-list" id="historyList"></div>
@@ -206,40 +310,44 @@
     </div>
 
     <script>
-      
+        // 获取DOM元素
         const quoteElement = document.getElementById('quote');
         const nameDisplay = document.getElementById('nameDisplay');
         const startBtn = document.getElementById('startBtn');
         const resetBtn = document.getElementById('resetBtn');
         const historyList = document.getElementById('historyList');
+        const statusElement = document.getElementById('status');
         
-       
+        // 存储学生名单和语录
         let students = [];
         let quotes = [];
         let history = [];
         let isRolling = false;
         let rollInterval;
         
-    
+        // 加载学生名单和语录
         async function loadData() {
             try {
-                
+                // 加载学生名单
                 const studentsResponse = await fetch('./api.json');
                 students = await studentsResponse.json();
                 
-             
+                // 加载语录
                 const quotesResponse = await fetch('./API.json');
                 quotes = await quotesResponse.json();
                 
-              
+                // 开始轮换语录
                 rotateQuotes();
+                
+                statusElement.textContent = "数据加载完成，可以开始点名";
             } catch (error) {
                 console.error('加载数据失败:', error);
                 quoteElement.textContent = "数据加载失败，请检查api.json和API.json文件";
+                statusElement.textContent = "数据加载失败，请检查网络连接和文件路径";
             }
         }
         
-        
+        // 轮换语录
         function rotateQuotes() {
             let currentIndex = 0;
             
@@ -247,7 +355,7 @@
                 quoteElement.textContent = quotes[currentIndex];
                 currentIndex = (currentIndex + 1) % quotes.length;
                 
-              
+                // 添加动画效果
                 quoteElement.parentElement.classList.add('flash');
                 setTimeout(() => {
                     quoteElement.parentElement.classList.remove('flash');
@@ -255,18 +363,18 @@
             }, 3000);
         }
         
-        
+        // 根据概率随机选择学生
         function getRandomStudent() {
-            
+            // 计算总概率
             let totalProbability = 0;
             students.forEach(student => {
                 totalProbability += student.probability || 1;
             });
             
-            
+            // 生成随机数
             const random = Math.random() * totalProbability;
             
-            
+            // 根据概率选择学生
             let cumulativeProbability = 0;
             for (const student of students) {
                 cumulativeProbability += student.probability || 1;
@@ -275,24 +383,51 @@
                 }
             }
             
-            
+            // 如果出现问题，返回第一个学生
             return students[0].name;
         }
         
+        // 检查学生是否在最近10条历史记录中
+        function isStudentInRecentHistory(studentName) {
+            const recentHistory = history.slice(0, 10);
+            return recentHistory.includes(studentName);
+        }
         
+        // 获取不重复的随机学生
+        function getUniqueRandomStudent() {
+            let studentName;
+            let attempts = 0;
+            const maxAttempts = 50; // 防止无限循环
+            
+            do {
+                studentName = getRandomStudent();
+                attempts++;
+                
+                // 如果尝试次数过多，说明可能无法找到不重复的学生
+                if (attempts >= maxAttempts) {
+                    statusElement.textContent = "注意：最近10条历史记录中可能已包含所有学生";
+                    break;
+                }
+            } while (isStudentInRecentHistory(studentName) && history.length < students.length);
+            
+            return studentName;
+        }
+        
+        // 开始随机点名
         function startRolling() {
             if (isRolling) return;
             
             isRolling = true;
             startBtn.disabled = true;
             startBtn.textContent = "点名中...";
+            statusElement.textContent = "正在随机选择学生...";
             
             let count = 0;
             const maxCount = 7;
             const totalTime = 3000; // 3秒
             const intervalTime = totalTime / maxCount;
             
-            
+            // 快速切换名字
             rollInterval = setInterval(() => {
                 nameDisplay.textContent = getRandomStudent();
                 nameDisplay.classList.add('flash');
@@ -303,55 +438,56 @@
                 
                 count++;
                 
-                
+                // 最后一次显示最终结果
                 if (count >= maxCount) {
                     clearInterval(rollInterval);
                     
-                    
-                    const finalStudent = getRandomStudent();
+                    // 显示最终结果
+                    const finalStudent = getUniqueRandomStudent();
                     nameDisplay.textContent = finalStudent;
                     nameDisplay.classList.add('pulse');
                     
-                    
+                    // 添加到历史记录
                     addToHistory(finalStudent);
                     
-                    
+                    // 恢复按钮状态
                     setTimeout(() => {
                         isRolling = false;
                         startBtn.disabled = false;
                         startBtn.textContent = "开始点名";
                         nameDisplay.classList.remove('pulse');
+                        statusElement.textContent = `已选中: ${finalStudent}`;
                     }, 1000);
                 }
             }, intervalTime);
         }
         
-        
+        // 添加到历史记录
         function addToHistory(studentName) {
             history.unshift(studentName);
             
-           
-            if (history.length > 10) {
-                history.pop();
-            }
-            
-            
+            // 更新历史记录显示
             updateHistoryDisplay();
         }
         
-        
+        // 更新历史记录显示
         function updateHistoryDisplay() {
             historyList.innerHTML = '';
             
-            history.forEach(student => {
+            history.forEach((student, index) => {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
-                historyItem.textContent = student;
+                historyItem.textContent = `${index + 1}. ${student}`;
                 historyList.appendChild(historyItem);
             });
+            
+            // 显示历史记录状态
+            if (history.length > 0) {
+                statusElement.textContent += ` | 历史记录: ${history.length}条`;
+            }
         }
         
-        
+        // 重置系统
         function resetSystem() {
             if (isRolling) {
                 clearInterval(rollInterval);
@@ -362,13 +498,14 @@
             
             nameDisplay.textContent = "准备点名";
             nameDisplay.classList.remove('pulse', 'flash');
+            statusElement.textContent = "系统已重置";
         }
         
-        
+        // 事件监听
         startBtn.addEventListener('click', startRolling);
         resetBtn.addEventListener('click', resetSystem);
         
-        
+        // 初始化
         loadData();
     </script>
 </body>
