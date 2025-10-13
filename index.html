@@ -2,6 +2,22 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+  <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课堂随机点名系统 | 2024级5班</title>
     <style>
