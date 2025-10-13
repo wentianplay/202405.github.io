@@ -185,7 +185,7 @@
             <div class="quote-container">
                 <div class="quote" id="quote">学而不思则罔，思而不学则殆</div>
             </div>
-            <h1>2024级五班 随机课堂点名系统</h1>
+            <h1>2024级5班 课堂随机点名系统</h1>
         </header>
         
         <main>
@@ -206,32 +206,32 @@
     </div>
 
     <script>
-        // 获取DOM元素
+      
         const quoteElement = document.getElementById('quote');
         const nameDisplay = document.getElementById('nameDisplay');
         const startBtn = document.getElementById('startBtn');
         const resetBtn = document.getElementById('resetBtn');
         const historyList = document.getElementById('historyList');
         
-        // 存储学生名单和语录
+       
         let students = [];
         let quotes = [];
         let history = [];
         let isRolling = false;
         let rollInterval;
         
-        // 加载学生名单和语录
+    
         async function loadData() {
             try {
-                // 加载学生名单
+                
                 const studentsResponse = await fetch('./api.json');
                 students = await studentsResponse.json();
                 
-                // 加载语录
+             
                 const quotesResponse = await fetch('./API.json');
                 quotes = await quotesResponse.json();
                 
-                // 开始轮换语录
+              
                 rotateQuotes();
             } catch (error) {
                 console.error('加载数据失败:', error);
@@ -239,7 +239,7 @@
             }
         }
         
-        // 轮换语录
+        
         function rotateQuotes() {
             let currentIndex = 0;
             
@@ -247,7 +247,7 @@
                 quoteElement.textContent = quotes[currentIndex];
                 currentIndex = (currentIndex + 1) % quotes.length;
                 
-                // 添加动画效果
+              
                 quoteElement.parentElement.classList.add('flash');
                 setTimeout(() => {
                     quoteElement.parentElement.classList.remove('flash');
@@ -255,18 +255,18 @@
             }, 3000);
         }
         
-        // 根据概率随机选择学生
+        
         function getRandomStudent() {
-            // 计算总概率
+            
             let totalProbability = 0;
             students.forEach(student => {
                 totalProbability += student.probability || 1;
             });
             
-            // 生成随机数
+            
             const random = Math.random() * totalProbability;
             
-            // 根据概率选择学生
+            
             let cumulativeProbability = 0;
             for (const student of students) {
                 cumulativeProbability += student.probability || 1;
@@ -275,11 +275,11 @@
                 }
             }
             
-            // 如果出现问题，返回第一个学生
+            
             return students[0].name;
         }
         
-        // 开始随机点名
+        
         function startRolling() {
             if (isRolling) return;
             
@@ -292,7 +292,7 @@
             const totalTime = 3000; // 3秒
             const intervalTime = totalTime / maxCount;
             
-            // 快速切换名字
+            
             rollInterval = setInterval(() => {
                 nameDisplay.textContent = getRandomStudent();
                 nameDisplay.classList.add('flash');
@@ -303,19 +303,19 @@
                 
                 count++;
                 
-                // 最后一次显示最终结果
+                
                 if (count >= maxCount) {
                     clearInterval(rollInterval);
                     
-                    // 显示最终结果
+                    
                     const finalStudent = getRandomStudent();
                     nameDisplay.textContent = finalStudent;
                     nameDisplay.classList.add('pulse');
                     
-                    // 添加到历史记录
+                    
                     addToHistory(finalStudent);
                     
-                    // 恢复按钮状态
+                    
                     setTimeout(() => {
                         isRolling = false;
                         startBtn.disabled = false;
@@ -326,20 +326,20 @@
             }, intervalTime);
         }
         
-        // 添加到历史记录
+        
         function addToHistory(studentName) {
             history.unshift(studentName);
             
-            // 只保留最近的10条记录
+           
             if (history.length > 10) {
                 history.pop();
             }
             
-            // 更新历史记录显示
+            
             updateHistoryDisplay();
         }
         
-        // 更新历史记录显示
+        
         function updateHistoryDisplay() {
             historyList.innerHTML = '';
             
@@ -351,7 +351,7 @@
             });
         }
         
-        // 重置系统
+        
         function resetSystem() {
             if (isRolling) {
                 clearInterval(rollInterval);
@@ -364,11 +364,11 @@
             nameDisplay.classList.remove('pulse', 'flash');
         }
         
-        // 事件监听
+        
         startBtn.addEventListener('click', startRolling);
         resetBtn.addEventListener('click', resetSystem);
         
-        // 初始化
+        
         loadData();
     </script>
 </body>
