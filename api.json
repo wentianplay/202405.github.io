@@ -1,7 +1,7 @@
 [
   {"name": "高文杰", "probability": 1},
   {"name": "何家琦", "probability": 1},
-  {"name": "杨梦龙", "probability": 1},
+  {"name": "杨梦龙", "probability": 0.9},
   {"name": "黄天瑞", "probability": 0.8},
   {"name": "曹徐博", "probability": 1},
   {"name": "陈建轩", "probability": 0.97},
@@ -36,7 +36,7 @@
   {"name": "吴宇鹏", "probability": 1},
   {"name": "吴鑫豪", "probability": 1},
   {"name": "夏永奇", "probability": 0.9},
-  {"name": "肖奥辉", "probability": 1.25},
+  {"name": "肖奥辉", "probability": 1.35},
   {"name": "肖超勇", "probability": 1},
   {"name": "肖雨豪", "probability": 1.32},
   {"name": "谢俊熙", "probability": 1},
