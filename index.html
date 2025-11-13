@@ -5,172 +5,393 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课堂随机点名系统 | 2024级5班</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // 控制台检测与跳转
+        window.addEventListener('load', function() {
+            const devtools = () => {};
+            console.log(devtools);
+            console.log(devtools.toString());
+            setInterval(() => {
+                (function() {
+                    return false;
+                }['constructor']('debugger')());
+            }, 1000);
+            
+            // 打开控制台自动跳转
+            if(window.console && window.console.firebug) {
+                window.location.href = 'https://www.wentianplay.cn';
+            }
+        }, false);
+    </script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             color: #333;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-top: 20px;
-            position: relative;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: #1976d2;
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .quote-container {
-            background: linear-gradient(to right, #e8f5e9, #c8e6c9);
-            padding: 22px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            text-align: center;
-            border-left: 5px solid #4caf50;
-            transition: all 0.5s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .quote {
-            font-size: 1.8rem;
-            color: #1b5e20;
-            font-style: italic;
-            font-weight: bold;
-            line-height: 1.4;
-        }
-
-        .name-display {
-            height: 280px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(145deg, #ffffff, #f5f5f5);
-            border-radius: 12px;
-            margin: 30px 0;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
-            border: 2px solid #90caf9;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            margin-top: 30px;
             position: relative;
             overflow: hidden;
         }
 
-        .name {
-            font-size: 5.5rem;
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(to right, #42a5f5, #1e88e5, #0d47a1);
+            border-radius: 20px 20px 0 0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h1 {
+            color: #1976d2;
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #1565c0, #1e88e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            border-radius: 2px;
+        }
+
+        .quote-container {
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 6px solid #1976d2;
+            transition: all 0.5s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .quote-container::before {
+            content: '\201C';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            font-size: 8rem;
+            font-family: Georgia, serif;
+            color: rgba(25, 118, 210, 0.1);
+            line-height: 1;
+        }
+
+        .quote {
+            font-size: 2rem;
+            color: #0d47a1;
+            font-style: italic;
             font-weight: bold;
+            line-height: 1.4;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            border: 2px solid #90caf9;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-title {
+            color: #1976d2;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0d47a1;
+        }
+
+        .name-display {
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #f5fbff, #e1f5fe);
+            border-radius: 16px;
+            margin: 40px 0;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.12);
+            border: 3px solid #42a5f5;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .name-display::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%2342a5f5" stroke-width="0.5" opacity="0.1"/></svg>');
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .name {
+            font-size: 6rem;
+            font-weight: 800;
             color: #d32f2f;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
-            letter-spacing: 1px;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+            animation: none;
         }
 
         .controls {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-top: 25px;
+            gap: 35px;
+            margin-top: 30px;
+            margin-bottom: 10px;
         }
 
         button {
-            padding: 16px 45px;
-            font-size: 1.3rem;
+            padding: 20px 50px;
+            font-size: 1.4rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.18);
             font-weight: bold;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1;
+            min-width: 220px;
+            justify-content: center;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: -1;
+            transition: width 0.4s ease;
+        }
+
+        button:hover::before {
+            width: 100%;
+        }
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         #startBtn {
-            background: linear-gradient(to right, #4caf50, #2e7d32);
+            background: linear-gradient(to right, #00c853, #1b5e20);
             color: white;
-        }
-
-        #startBtn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 8px 15px rgba(46, 125, 50, 0.4);
         }
 
         #resetBtn {
-            background: linear-gradient(to right, #f44336, #d32f2f);
+            background: linear-gradient(to right, #ff5252, #d32f2f);
             color: white;
         }
 
-        #resetBtn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 8px 15px rgba(211, 47, 47, 0.4);
+        .status {
+            text-align: center;
+            margin: 20px 0 5px;
+            color: #1976d2;
+            font-size: 1.2rem;
+            font-weight: 600;
+            height: 30px;
         }
 
         .history {
-            margin-top: 35px;
-            background: linear-gradient(to right, #e8f5e9, #c8e6c9);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-top: 50px;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
         }
 
         .history h3 {
-            color: #1b5e20;
-            margin-bottom: 20px;
+            color: #0d47a1;
+            margin-bottom: 25px;
             text-align: center;
-            font-size: 1.7rem;
+            font-size: 1.9rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 20px;
+        }
+
+        .history h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            border-radius: 2px;
         }
 
         .history-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 18px;
             justify-content: center;
         }
 
         .history-item {
-            background: linear-gradient(to right, #a5d6a7, #81c784);
-            padding: 12px 22px;
-            border-radius: 25px;
-            font-size: 1.1rem;
+            background: linear-gradient(to right, #42a5f5, #1976d2);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.3rem;
             font-weight: bold;
-            color: #1b5e20;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+            min-width: 220px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
+        .history-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .history-item:hover::before {
+            left: 100%;
+        }
+
+        .history-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .copyright a {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .copyright a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #1976d2;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+        }
+
+        .copyright a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* 动画效果 */
         .pulse {
-            animation: pulse 0.5s infinite alternate;
+            animation: pulse 0.8s infinite alternate;
         }
 
         @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.08); }
+            from { transform: scale(1); text-shadow: 0 0 10px rgba(211, 47, 47, 0.5); }
+            to { transform: scale(1.05); text-shadow: 0 0 20px rgba(211, 47, 47, 0.8), 0 0 30px rgba(211, 47, 47, 0.6); }
         }
 
         .flash {
-            animation: flash 0.2s;
+            animation: flash 0.3s;
         }
 
         @keyframes flash {
@@ -179,56 +400,63 @@
             100% { opacity: 1; }
         }
 
-        .copyright {
-            text-align: center;
-            margin-top: 25px;
-            color: #555;
-            font-size: 1rem;
-            font-weight: 500;
+        .rotate {
+            animation: rotate 1s linear infinite;
         }
 
-        .status {
-            text-align: center;
-            margin-top: 20px;
-            color: #1976d2;
-            font-size: 1.1rem;
-            font-weight: 500;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        @media (min-width: 1024px) {
+        .blink {
+            animation: blink 0.8s linear infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 响应式设计 */
+        @media (min-width: 1600px) {
             .container {
-                max-width: 1200px;
-                padding: 50px;
+                max-width: 1400px;
             }
-
-            h1 {
-                font-size: 4rem;
-            }
-
-            .quote {
-                font-size: 2.2rem;
-            }
-
+            
             .name {
-                font-size: 6.5rem;
+                font-size: 7rem;
             }
-
-            .name-display {
-                height: 340px;
+            
+            .quote {
+                font-size: 2.3rem;
             }
+        }
 
-            button {
-                padding: 20px 55px;
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .name {
+                font-size: 5.5rem;
+            }
+            
+            .quote {
                 font-size: 1.7rem;
             }
-
-            .history h3 {
-                font-size: 2rem;
+            
+            .controls {
+                gap: 25px;
             }
-
-            .history-item {
-                font-size: 1.4rem;
-                padding: 15px 28px;
+            
+            button {
+                padding: 18px 40px;
+                font-size: 1.3rem;
             }
         }
 
@@ -242,58 +470,131 @@
             }
 
             .quote {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
+            }
+            
+            .quote-container {
+                padding: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 100%;
+                max-width: 350px;
             }
 
             .name {
-                font-size: 3.2rem;
+                font-size: 4.2rem;
             }
-
+            
             .name-display {
-                height: 200px;
+                height: 250px;
             }
 
+            .controls {
+                flex-wrap: wrap;
+            }
+            
             button {
-                padding: 14px 30px;
-                font-size: 1.1rem;
+                width: 100%;
+                max-width: 350px;
             }
-
-            .history h3 {
-                font-size: 1.5rem;
-            }
-
+            
             .history-item {
-                font-size: 1rem;
-                padding: 10px 18px;
+                width: 100%;
+                max-width: 300px;
             }
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
             h1 {
                 font-size: 2rem;
             }
+            
+            .quote {
+                font-size: 1.3rem;
+            }
+            
+            .quote-container {
+                padding: 18px 15px;
+            }
+            
+            .name {
+                font-size: 3.5rem;
+            }
+            
+            .name-display {
+                height: 220px;
+            }
+            
+            .controls {
+                gap: 15px;
+            }
+            
+            button {
+                font-size: 1.2rem;
+                padding: 16px;
+            }
+            
+            .stat-title {
+                font-size: 1.1rem;
+            }
+            
+            .stat-value {
+                font-size: 1.9rem;
+            }
+            
+            .history {
+                padding: 20px;
+            }
+            
+            .history h3 {
+                font-size: 1.6rem;
+            }
+            
+            .history-item {
+                font-size: 1.1rem;
+                padding: 12px 20px;
+            }
+            
+            .copyright {
+                font-size: 1rem;
+            }
+        }
 
+        @media (max-width: 320px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .name {
+                font-size: 3rem;
+            }
+            
             .quote {
                 font-size: 1.1rem;
             }
-
-            .name {
-                font-size: 2.8rem;
-            }
-
-            .name-display {
-                height: 170px;
-            }
-
+            
             .controls {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
+                gap: 10px;
             }
-
+            
             button {
-                width: 85%;
-                padding: 15px;
+                min-width: auto;
+                padding: 14px;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -301,164 +602,249 @@
 <body>
     <div class="container">
         <header>
-<h1>2024级5班 课堂随机点名系统</h1>
+            <h1><i class="fas fa-users"></i> 2024级5班 课堂随机点名系统</h1>
             <div class="quote-container">
-                <div class="quote" id="quote">天门行知职业学校2024级五班所有</div>
+                <div class="quote" id="quote">准备加载名言...</div>
             </div>
-            
-        </header>
-
+            <div class="stats">
         <main>
             <div class="name-display">
-                <div class="name" id="nameDisplay">准备点名</div>
+                <div class="name" id="nameDisplay">
+                    <span class="blink">准备点名</span>
+                </div>
             </div>
 
             <div class="controls">
-                <button id="startBtn">开始点名</button>
-                <button id="resetBtn">重置</button>
+                <button id="startBtn">
+                    <i class="fas fa-play"></i> 开始点名
+                </button>
+                <button id="resetBtn">
+                    <i class="fas fa-redo"></i> 重置系统
+                </button>
             </div>
-
-            <div class="status" id="status">系统就绪</div>
+            
+            <div class="status" id="status">正在初始化系统...</div>
 
             <div class="history">
-                <h3>点名历史</h3>
-                <div class="history-list" id="historyList"></div>
+                <h3><i class="fas fa-history"></i> 点名历史</h3>
+                <div class="history-list" id="historyList">
+                    <div class="history-item">等待点名记录...</div>
+                </div>
             </div>
         </main>
-        
-        <div class="copyright">© 2025 文天玩WenTianPlay |                     <a href="./概率.txt" class="domain-link">概率均为“1”，无黑箱操作。</a></div>
+
+        <div class="copyright">
+            © 2025 文天玩WenTianPlay | 
+            <a href="#" class="domain-link">概率均为"1"，无黑箱操作</a>
+        </div>
     </div>
 
     <script>
+        // 反控制台操作
         document.addEventListener("contextmenu", e => e.preventDefault());
-        document.addEventListener("keydown", e => { if (e.key === "F12") e.preventDefault(); });
+        document.addEventListener("keydown", e => { 
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+                e.preventDefault();
+                window.location.href = 'https://www.wentianplay.cn';
+            }
+        });
         document.addEventListener("copy", e => e.preventDefault());
 
+        // DOM 元素
         const quoteElement = document.getElementById('quote');
         const nameDisplay = document.getElementById('nameDisplay');
         const startBtn = document.getElementById('startBtn');
         const resetBtn = document.getElementById('resetBtn');
         const historyList = document.getElementById('historyList');
         const statusElement = document.getElementById('status');
+        const totalCountElement = document.getElementById('totalCount');
+        const totalProbabilityElement = document.getElementById('totalProbability');
 
+        // 数据变量
         let students = [];
         let quotes = [];
         let history = [];
         let isRolling = false;
         let rollInterval;
+        let totalProbability = 0;
+        let currentProbabilityMode = 100; // 默认概率模式为100
 
+        // 加载数据函数
         async function loadData() {
+            statusElement.textContent = "正在加载学生数据...";
+            
             try {
-                const studentsResponse = await fetch('./api.json');
-                students = await studentsResponse.json();
-
+                // 尝试从本地存储获取学生数据
+                const savedStudents = localStorage.getItem('students');
+                const savedTimestamp = localStorage.getItem('students_timestamp');
+                const oneDayAgo = new Date().getTime() - (24 * 60 * 60 * 1000);
+                
+                // 如果本地数据存在且未过期（1天内），则使用本地数据
+                if (savedStudents && savedTimestamp && parseInt(savedTimestamp) > oneDayAgo) {
+                    students = JSON.parse(savedStudents);
+                    statusElement.textContent = "从本地缓存加载学生数据";
+                } else {
+                    // 否则从API加载数据
+                    const studentsResponse = await fetch('./api.json');
+                    students = await studentsResponse.json();
+                    // 保存到本地存储
+                    localStorage.setItem('students', JSON.stringify(students));
+                    localStorage.setItem('students_timestamp', new Date().getTime().toString());
+                    statusElement.textContent = "从API加载学生数据";
+                }
+                
+                // 加载名言
                 const quotesResponse = await fetch('./API.json');
                 quotes = await quotesResponse.json();
-
+                
+                // 初始化显示
+                totalCountElement.textContent = students.length;
+                calculateTotalProbability();
                 rotateQuotes();
-                statusElement.textContent = "数据加载完成，可以开始点名";
+                
+                // 显示初始状态
+                statusElement.textContent = "系统就绪，可以开始点名";
+                nameDisplay.innerHTML = '<span class="blink">准备点名</span>';
+                
             } catch (error) {
                 console.error('加载数据失败:', error);
-                quoteElement.textContent = "数据加载失败，请检查api.json和API.json文件";
-                statusElement.textContent = "数据加载失败，请检查网络连接和文件路径";
+                quoteElement.textContent = "数据加载失败，请检查网络连接";
+                statusElement.textContent = "数据加载失败，请检查API文件";
+                nameDisplay.textContent = "系统错误";
             }
         }
 
+        // 计算总概率
+        function calculateTotalProbability() {
+            totalProbability = students.reduce((sum, student) => sum + (student.probability || 1), 0);
+            totalProbabilityElement.textContent = totalProbability.toFixed(2);
+            
+            // 根据总概率确定模式
+            currentProbabilityMode = totalProbability <= 50 ? 50 : 100;
+            statusElement.textContent = `总权重: ${totalProbability.toFixed(2)}, 使用${currentProbabilityMode}模式`;
+        }
+
+        // 随机名言展示
         function rotateQuotes() {
-            let currentIndex = 0;
-
+            let currentIndex = Math.floor(Math.random() * quotes.length);
+            
+            // 显示第一条名言
+            quoteElement.textContent = quotes[currentIndex];
+            
+            // 设置定时器轮换名言
             setInterval(() => {
-                quoteElement.textContent = quotes[currentIndex];
                 currentIndex = (currentIndex + 1) % quotes.length;
-
+                quoteElement.textContent = quotes[currentIndex];
+                
+                // 添加动画效果
                 quoteElement.parentElement.classList.add('flash');
                 setTimeout(() => {
                     quoteElement.parentElement.classList.remove('flash');
-                }, 200);
-            }, 3500);
+                }, 300);
+            }, 5000);
         }
 
+        // 获取随机学生（考虑权重）
         function getRandomStudent() {
-            let totalProbability = 0;
-            students.forEach(student => {
-                totalProbability += student.probability || 1;
-            });
-
-            const random = Math.random() * totalProbability;
-
-            let cumulativeProbability = 0;
+            // 使用加权随机算法
+            let totalWeight = students.reduce((sum, student) => {
+                return sum + (student.probability || 1);
+            }, 0);
+            
+            let random = Math.random() * totalWeight;
+            
             for (const student of students) {
-                cumulativeProbability += student.probability || 1;
-                if (random <= cumulativeProbability) {
+                random -= student.probability || 1;
+                if (random <= 0) {
                     return student.name;
                 }
             }
-
+            
+            // 如果算法失败，返回第一个学生
             return students[0].name;
         }
 
+        // 检查学生是否在最近历史中（10条内不重复）
         function isStudentInRecentHistory(studentName) {
             return history.slice(0, 10).includes(studentName);
         }
 
+        // 获取唯一随机学生（最近10条历史不重复）
         function getUniqueRandomStudent() {
+            // 如果历史记录超过学生总数，清空历史记录
             if (history.length >= students.length) {
-                statusElement.textContent = "注意：所有学生已被点过名";
-                return students[Math.floor(Math.random() * students.length)].name;
+                history = [];
+                updateHistoryDisplay();
             }
-
+            
             let studentName;
             let attempts = 0;
-            const maxAttempts = 100;
-
+            const maxAttempts = 100; // 防止死循环
+            
             do {
                 studentName = getRandomStudent();
                 attempts++;
+                
+                // 如果尝试次数过多，直接返回结果
                 if (attempts >= maxAttempts) {
-                    statusElement.textContent = "注意：随机选择遇到困难，已返回随机选择";
+                    statusElement.textContent = "注意：随机选择遇到困难，返回随机结果";
                     break;
                 }
             } while (isStudentInRecentHistory(studentName));
-
+            
             return studentName;
         }
 
+        // 开始随机点名
         function startRolling() {
             if (isRolling) return;
-
+            
             isRolling = true;
             startBtn.disabled = true;
-            startBtn.textContent = "点名中...";
-            statusElement.textContent = "正在随机选择学生...";
-
+            startBtn.innerHTML = '<i class="fas fa-spinner rotate"></i> 点名中...';
+            statusElement.textContent = "随机选择中...";
+            
             let count = 0;
-            const maxCount = 7;
-            const totalTime = 3000;
+            const maxCount = 12;
+            const totalTime = 3500;
             const intervalTime = totalTime / maxCount;
-
+            let previousStudent = "";
+            
             rollInterval = setInterval(() => {
-                nameDisplay.textContent = getRandomStudent();
+                // 显示随机学生名字并添加动画
+                let randomStudent;
+                do {
+                    randomStudent = students[Math.floor(Math.random() * students.length)].name;
+                } while (randomStudent === previousStudent);
+                
+                previousStudent = randomStudent;
+                nameDisplay.textContent = randomStudent;
                 nameDisplay.classList.add('flash');
-
+                
+                // 移除动画
                 setTimeout(() => {
                     nameDisplay.classList.remove('flash');
                 }, 100);
-
+                
                 count++;
-
+                
+                // 达到最大循环次数后停止
                 if (count >= maxCount) {
                     clearInterval(rollInterval);
-
+                    
+                    // 获取最终选择的学生
                     const finalStudent = getUniqueRandomStudent();
                     nameDisplay.textContent = finalStudent;
                     nameDisplay.classList.add('pulse');
-
+                    
+                    // 添加到历史记录
                     addToHistory(finalStudent);
-
+                    
+                    // 恢复按钮状态
                     setTimeout(() => {
                         isRolling = false;
                         startBtn.disabled = false;
-                        startBtn.textContent = "开始点名";
+                        startBtn.innerHTML = '<i class="fas fa-play"></i> 开始点名';
                         nameDisplay.classList.remove('pulse');
                         statusElement.textContent = `已选中: ${finalStudent}`;
                     }, 1000);
@@ -466,44 +852,69 @@
             }, intervalTime);
         }
 
+        // 添加到历史记录
         function addToHistory(studentName) {
             history.unshift(studentName);
-            if (history.length > 10) {
-                history = history.slice(0, 10);
+            if (history.length > 15) {
+                history = history.slice(0, 15);
             }
             updateHistoryDisplay();
+            
+            // 同时保存到sessionStorage
+            sessionStorage.setItem('rollCallHistory', JSON.stringify(history));
         }
 
+        // 更新历史记录显示
         function updateHistoryDisplay() {
             historyList.innerHTML = '';
-
+            
             history.forEach((student, index) => {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
-                historyItem.textContent = `${index + 1}. ${student}`;
+                historyItem.innerHTML = `<span class="badge">${index + 1}</span> ${student}`;
                 historyList.appendChild(historyItem);
             });
         }
 
+        // 重置系统
         function resetSystem() {
             if (isRolling) {
                 clearInterval(rollInterval);
                 isRolling = false;
-                startBtn.disabled = false;
-                startBtn.textContent = "开始点名";
             }
-
-            nameDisplay.textContent = "准备点名";
+            
+            startBtn.disabled = false;
+            startBtn.innerHTML = '<i class="fas fa-play"></i> 开始点名';
+            nameDisplay.innerHTML = '<span class="blink">准备点名</span>';
             nameDisplay.classList.remove('pulse', 'flash');
+            
             history = [];
             updateHistoryDisplay();
+            
+            // 清除sessionStorage中的历史记录
+            sessionStorage.removeItem('rollCallHistory');
+            
             statusElement.textContent = "系统已重置";
         }
 
+        // 初始化加载历史记录
+        function loadHistory() {
+            const savedHistory = sessionStorage.getItem('rollCallHistory');
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+                updateHistoryDisplay();
+            }
+        }
+
+        // 事件监听
         startBtn.addEventListener('click', startRolling);
         resetBtn.addEventListener('click', resetSystem);
 
-        loadData();
+        // 初始化系统
+        window.addEventListener('load', () => {
+            loadHistory();
+            loadData();
+        });
     </script>
 </body>
 </html>
