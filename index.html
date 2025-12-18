@@ -348,10 +348,10 @@
 
         async function loadData() {
             try {
-                const studentsResponse = await fetch('./api.json');
+                const studentsResponse = await fetch('https://api.wentianplay.com/api/xz202405api.json');
                 students = await studentsResponse.json();
 
-                const quotesResponse = await fetch('./API.json');
+                const quotesResponse = await fetch('https://api.wentianplay.com/api/xzapi.json');
                 quotes = await quotesResponse.json();
 
                 rotateQuotes();
